@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="loginForm">
+        <label for="FirstName">Firstname:</label>
+        <input type="text" id="FirstName" name="FirstName" required>
+        <br><br>
+
+        <label for="Lastname">Lastname:</label>
+        <input type="text" id="Lastname" name="Lastname" required>
+        <br><br>
+
+        <label for="Birthday">Birthday:</label>
+        <input type="date" id="Birthday" name="Birthday" required>
+        <br><br>
+
+        <label>Gender:</label>
+        <input type="radio" name="gender" value="Male" required> Male
+        <input type="radio" name="gender" value="Female" required> Female
+        <br><br>
+
+        <label for="country">Country:</label>
+        <select id="country" onchange="updateCities()">
+            <option value="Ukraine">Ukraine</option>
+            <option value="Poland">Poland</option>
+            <option value="Germany">Germany</option>
+        </select>
+
+        <label for="city">City:</label>
+        <select id="city">
+        </select>
+
+        <br><br>
+        <label>Skills:</label>
+        <br>
+        <input type="checkbox" value="HTML"> HTML
+        <input type="checkbox" value="CSS"> CSS
+        <input type="checkbox" value="JS"> JS
+        <input type="checkbox" value="PHP"> PHP
+        <input type="checkbox" value="C++"> C++
+        <input type="checkbox" value="Java"> Java
+        <input type="checkbox" value="C#"> C#
+        <br><br>
+        <button type="button" onclick="saveData()">Save</button>
+    </form>
+
+    <h2>Saved Data</h2>
+    <table id="dataTable">
+        <tbody>
+            <tr>
+                <th>Firstname</th>
+            </tr>
+            <tr>
+                <th>Lastname</th>
+            </tr>
+            <tr>
+                <th>Birthday</th>
+            </tr>
+            <tr>
+                <th>Gender</th>
+            </tr>
+            <tr>
+                <th>Country</th>
+            </tr>
+            <tr>
+                <th>City</th>
+            </tr>
+            <tr>
+                <th>Skills</th>
+            </tr>
+        </tbody>
+    </table>
+    
+    <script>
+        const citiesByCountry = {
+            "Ukraine": ["Kyiv", "Lviv", "Odessa"],
+            "Poland": ["Warsaw", "Krakow", "Gdansk"],
+            "Germany": ["Berlin", "Munich", "Frankfurt"]
+        };
+        function updateCities() {
+            const countrySelect = document.getElementById("country");
+            const citySelect = document.getElementById("city");
+            const selectedCountry = countrySelect.value;
+
+            citySelect.innerHTML = "";
+
+            citiesByCountry[selectedCountry].forEach(city => {
+                const option = document.createElement("option");
+                option.value = city;
+                option.textContent = city;
+                citySelect.appendChild(option);
+            });
+        }
+        updateCities();
+        function saveData() {
+            const firstName = document.getElementById("FirstName").value;
+            const lastName = document.getElementById("Lastname").value;
+            const birthday = document.getElementById("Birthday").value;
+            const gender = document.querySelector('input[name="gender"]:checked')?.value || "Not specified";
+            const country = document.getElementById("country").value;
+            const city = document.getElementById("city").value;
+
+            const skills = [];
+            document.querySelectorAll('input[type="checkbox"]:checked').forEach(skill => {
+                skills.push(skill.value);
+            });
+            if (!firstName || !lastName || !birthday || !gender) {
+                alert("Please fill all required fields.");
+                return;
+            }
+            const rows = document.getElementById("dataTable").querySelectorAll("tbody tr");
+            rows[0].innerHTML += `<td>${firstName}</td>`;
+            rows[1].innerHTML += `<td>${lastName}</td>`;
+            rows[2].innerHTML += `<td>${birthday}</td>`;
+            rows[3].innerHTML += `<td>${gender}</td>`;
+            rows[4].innerHTML += `<td>${country}</td>`;
+            rows[5].innerHTML += `<td>${city}</td>`;
+            rows[6].innerHTML += `<td>${skills.join(", ")}</td>`;
+            document.getElementById("loginForm").reset();
+            updateCities();
+        }
+    </script>
+</body>
+</html>

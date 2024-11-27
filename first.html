@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practise</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <form id="loginFrom">
+        <label for="username">Login:</label>
+        <input type="text" id="username" name="username" required>
+        <br><br>
+        <label for="password">Password:</label>
+        <input type="text" id="password" name="password" required>
+        <br><br>
+        <label for="">
+            <input type="checkbox" id="rememberMe"> Remember me
+        </label>
+        <br><br>
+        <button type="button" onclick="log()">Sign in</button>
+    </form>
+    <script>
+        function log(){
+            const username = document.getElementById('username').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            if(username){
+                alert(`Hello, ${username}! I ${rememberMe ? 'remembered' : 'did not remember'} you`);
+            }
+            else{
+                alert('Please enter your login')
+            }
+        }
+    </script>
+
+</body>
+</html>
